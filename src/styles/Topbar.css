@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.top-container {
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+a{
+  transition: all 0.5s;
+}
+
+a:active {
+  transform: scale(0.7);
+}
+
+.nunito-sans {
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 1.25rem;
+  font-variation-settings: "wdth" 100, "YTLC" 500;
+}
+
+.kanit-medium {
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 950px) {
+    .right-links {
+        width: 10rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {  
+  .right-links {
+    display: none;
+  }
+}
