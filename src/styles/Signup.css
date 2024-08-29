@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.form-heading {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-decoration: underline;
+}
+
+.inputs {
+    height: 5vh;
+}
+
+.inp-label {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.form-item {
+    margin-top: 1vh;
+}
+
+.sign-link {
+    color: rgb(49, 50, 52);
+}
