@@ -1,14 +1,27 @@
 import { dbConnect } from "@/lib/dbConnect";
-
+import { UserModel } from "@/models/User";
 
 export async function POST(request: Request) {
     await dbConnect();
 
-    const obj = await request.json();
+    try {
+        const { fname, mname, lname, username, email, password } = await request.json();
+        
+        const existingUserByEmail = await UserModel.findOne({
+            email
+        })
 
-    return Response.json({
-        success: true,
-        message: "Works",
-        user: obj
-    })
+        
+
+        const newUser = new UserModel({
+            fname,
+            mname,
+            lname,
+            username,
+
+        })
+
+    } catch(error) {
+
+    }
 }

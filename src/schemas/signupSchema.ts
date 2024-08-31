@@ -21,8 +21,8 @@ const lnameValidation = z
 //Validation for username.
 export const usernameValidation = z
   .string()
-  .min(4, "Username should be at least 2 characters long.")
-  .max(15, "Username should be at most 4 characters long.")
+  .min(4, "Username should be at least 4 characters long.")
+  .max(15, "Username should be at most 15 characters long.")
   .regex(
     /^[a-zA-Z0-9._-]+$/,
     "Username can only have letters, numbers or any of ['.', '_', '-']"

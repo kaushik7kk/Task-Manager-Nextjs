@@ -9,39 +9,65 @@ const UsernameQuerySchema = z.object({
 
 export async function GET(request: Request) {
   await dbConnect();
-  const { searchParams } = new URL(request.url);
-  const queryParam = {
-    username: searchParams.get("username"),
-  };
 
-  const result = UsernameQuerySchema.safeParse(queryParam);
-  if (!result.success) {
-    console.log(result.error.format().username?._errors[0]);
-    const usernameErrors = result.error.format().username?._errors || [];
+  try {
+    const { searchParams } = new URL(request.url);
+    const queryParam = {
+      username: searchParams.get("username"),
+    };
+
+    const result = UsernameQuerySchema.safeParse(queryParam);
+    if (!result.success) {
+      console.log(result.error.format().username?._errors[0]);
+      const usernameErrors = result.error.format().username?._errors || [];
+      return Response.json(
+        {
+          success: false,
+          message:
+            usernameErrors?.length > 0
+              ? usernameErrors.join(", ")
+              : "Invalid query parameters.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+    const { username } = result.data;
+
+    const existingUser = await UserModel.findOne({ username });
+    console.log(existingUser);
+    if (existingUser) {
+      return Response.json(
+        {
+          success: false,
+          message: "Username already taken",
+        },
+        {
+          status: 400,
+        }
+      );
+    } else {
+      return Response.json(
+        {
+          success: true,
+          message: "Valid username",
+        },
+        {
+          status: 200,
+        }
+      );
+    }
+  } catch (err) {
+    console.error("Error checking username", err);
     return Response.json(
       {
         success: false,
-        message:
-          usernameErrors?.length > 0
-            ? usernameErrors.join(", ")
-            : "Invalid query parameters.",
+        message: "Error checking username",
       },
       {
-        status: 400,
+        status: 500,
       }
     );
-  }
-  const { username } = result.data;
-
-  const existingUser = await UserModel.findOne({ username });
-  console.log(existingUser);
-  if (existingUser) {
-    return Response.json({
-      message: "Username exists",
-    });
-  } else {
-    return Response.json({
-      message: "Valid username",
-    });
   }
 }

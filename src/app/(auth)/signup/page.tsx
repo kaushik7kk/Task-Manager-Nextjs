@@ -16,18 +16,22 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { signupSchema } from "@/schemas/signupSchema";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import axios, { AxiosError } from "axios";
-import { useDebounceCallback } from "usehooks-ts"
+import { useDebounceCallback } from "usehooks-ts";
+import { ApiResponse } from "@/types/ApiResponse";
 
 export default function Signup() {
-
-  // States to be used.
+  // States.
   const [username, setUsername] = useState("");
   const [uniqueUsernameMsg, setUniqueUsernameMsg] = useState("");
+  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const debounced = useDebounceCallback(setUsername, 300)
-  
+  // Debounced value for username callback.
+  const debounced = useDebounceCallback(setUsername, 300);
+
   // Setting up validation for the entire form using ZOD and usehooks.
   const form = useForm({
     resolver: zodResolver(signupSchema),
@@ -41,30 +45,42 @@ export default function Signup() {
     },
   });
 
-  
+  // To check the uniqueness of a username everytime it changes in the input.
   useEffect(() => {
     const checkUniqueUsername = async () => {
       if (username) {
+        setIsCheckingUsername(true);
         setUniqueUsernameMsg("");
         try {
-          const response = await axios.get(`/api/check-unique-username?username=${username}`)
-          console.log(response);
+          const response = await axios.get(
+            `/api/check-unique-username?username=${username}`
+          );
           setUniqueUsernameMsg(response.data.message);
-        } catch(err) {
-          // setUniqueUsernameMsg(response?.data.message);
+        } catch (err) {
+          const axiosError = err as AxiosError<ApiResponse>;
+          setUniqueUsernameMsg(axiosError.response?.data.message ?? "");
         } finally {
-          
+          setIsCheckingUsername(false);
         }
+      } else {
+        setUniqueUsernameMsg("");
       }
-    }
+    };
     checkUniqueUsername();
-  }, [username])
+  }, [username]);
+
   // Form Submission Handler.
   const onSubmitHandler = async (data: z.infer<typeof signupSchema>) => {
-    const response = await axios.post("/api/signup", data);
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post<ApiResponse>("/api/signup", data);
+
+    } catch(err) {
+      
+    }
 
   };
-  
+
   return (
     <>
       <Topbar />
@@ -157,7 +173,16 @@ export default function Signup() {
                     required
                   />
                 </FormControl>
-                <p>{uniqueUsernameMsg}</p>
+                {isCheckingUsername && <Loader2 className="animate-spin" />}
+                <p
+                  className={`text-sm ${
+                    uniqueUsernameMsg === "Valid username"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {uniqueUsernameMsg}
+                </p>
                 <FormMessage />
               </FormItem>
             )}
@@ -206,7 +231,13 @@ export default function Signup() {
             )}
           />
           <Button type="submit" className="w-32 mx-auto mt-4">
-            Submit
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
+              </>
+            ) : (
+              "Signup"
+            )}
           </Button>
           <div className="sign-link w-44 mt-2 mx-auto">
             Already a user?&nbsp;
