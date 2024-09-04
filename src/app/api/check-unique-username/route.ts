@@ -18,7 +18,6 @@ export async function GET(request: Request) {
 
     const result = UsernameQuerySchema.safeParse(queryParam);
     if (!result.success) {
-      console.log(result.error.format().username?._errors[0]);
       const usernameErrors = result.error.format().username?._errors || [];
       return Response.json(
         {
@@ -36,7 +35,6 @@ export async function GET(request: Request) {
     const { username } = result.data;
 
     const existingUser = await UserModel.findOne({ username });
-    console.log(existingUser);
     if (existingUser) {
       return Response.json(
         {

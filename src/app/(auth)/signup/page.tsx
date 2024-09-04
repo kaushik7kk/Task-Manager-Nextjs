@@ -21,6 +21,8 @@ import Link from "next/link";
 import axios, { AxiosError } from "axios";
 import { useDebounceCallback } from "usehooks-ts";
 import { ApiResponse } from "@/types/ApiResponse";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Signup() {
   // States.
@@ -28,6 +30,9 @@ export default function Signup() {
   const [uniqueUsernameMsg, setUniqueUsernameMsg] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Toast.
+  const { toast } = useToast();
 
   // Debounced value for username callback.
   const debounced = useDebounceCallback(setUsername, 300);
@@ -52,7 +57,7 @@ export default function Signup() {
         setIsCheckingUsername(true);
         setUniqueUsernameMsg("");
         try {
-          const response = await axios.get(
+          const response = await axios.get<ApiResponse>(
             `/api/check-unique-username?username=${username}`
           );
           setUniqueUsernameMsg(response.data.message);
@@ -74,11 +79,22 @@ export default function Signup() {
     setIsSubmitting(true);
     try {
       const response = await axios.post<ApiResponse>("/api/signup", data);
-
-    } catch(err) {
-      
+      toast({
+        title: `${response.data.success ? "Success" : "Failure"}`,
+        description: response.data.message,
+      });
+    } catch (error) {
+      console.error("Error in user signup", error);
+      const axiosError = error as AxiosError<ApiResponse>;
+      let errorMessage = axiosError.response?.data.message;
+      toast({
+        title: "Signup failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
   };
 
   return (
@@ -177,7 +193,7 @@ export default function Signup() {
                 <p
                   className={`text-sm ${
                     uniqueUsernameMsg === "Valid username"
-                      ? "text-green-500"
+                      ? "text-emerald-700"
                       : "text-red-500"
                   }`}
                 >
