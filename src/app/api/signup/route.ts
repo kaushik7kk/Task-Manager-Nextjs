@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const existingUserByUsername = await UserModel.findOne({
       username,
     });
-    
+
     if (existingUserByUsername) {
       return Response.json(
         {
@@ -24,11 +24,11 @@ export async function POST(request: Request) {
         }
       );
     }
-    
+
     const existingUserByEmail = await UserModel.findOne({
       email,
     });
-    
+
     if (existingUserByEmail) {
       return Response.json(
         {

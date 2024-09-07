@@ -29,12 +29,12 @@ export const usernameValidation = z
   );
 
 //Validation for email.
-const emailValidation = z.string().email({
+export const emailValidation = z.string().email({
   message: "Invalid email address",
 });
 
 //Validation for password.
-const passwordValidation = z
+export const passwordValidation = z
   .string()
   .min(8, "Password should be at least 8 characters long.")
   .regex(

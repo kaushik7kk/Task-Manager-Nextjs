@@ -1,9 +1,13 @@
+"use client"
+
 import Topbar from "@/components/Topbar";
-import React from "react";
+import React, { useEffect } from "react";
 import "@/styles/Landing.css";
 import Link from "next/link";
+import { getSession } from "next-auth/react";
 
 export default function Landing() {
+
   return (
     <>
       {/* <div className="mx-auto text-center">LANDING PAGE</div> */}
