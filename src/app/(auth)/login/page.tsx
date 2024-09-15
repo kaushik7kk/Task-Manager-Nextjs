@@ -18,14 +18,12 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import axios, { AxiosError } from "axios";
-import { useDebounceCallback } from "usehooks-ts";
-import { ApiResponse } from "@/types/ApiResponse";
-import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { signinSchema } from "@/schemas/signinSchema";
-import { getSession, signIn, useSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 
 export default function Signup() {
+
 
   // States.
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,16 +49,23 @@ export default function Signup() {
         identifier: data.identifier,
         password: data.password,
       });
-      console.log(response);
+      if (response?.url) {
+        const session = await getSession();
+        toast({
+          title: "Login successful",
+          description: `Welcome ${session?.user.fname} ${session?.user.lname}`,
+        });
+      } else {
+        toast({
+          title: "Login failed",
+          description: response?.error,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setIsSubmitting(false);
-      const session = await getSession();
-      toast({
-        title: "Login successful",
-        description: `Welcome ${session?.user.fname} ${session?.user.lname}`
-      })
     }
   };
 
