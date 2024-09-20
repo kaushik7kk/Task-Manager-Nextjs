@@ -3,12 +3,15 @@ import { UserModel } from "@/models/User";
 import bcryptjs from "bcryptjs";
 
 export async function POST(request: Request) {
+  // Connecting to database.
   await dbConnect();
 
   try {
+    // Data from api call.
     const { fname, mname, lname, username, email, password } =
       await request.json();
 
+    // If user with username already exists.
     const existingUserByUsername = await UserModel.findOne({
       username,
     });
@@ -25,6 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // If user with email exists.
     const existingUserByEmail = await UserModel.findOne({
       email,
     });
@@ -41,8 +45,10 @@ export async function POST(request: Request) {
       );
     }
 
+    // Hash password.
     const hashedPassword = await bcryptjs.hash(password, 10);
 
+    // Create new user.
     const newUser = new UserModel({
       fname,
       mname,
@@ -52,6 +58,7 @@ export async function POST(request: Request) {
       password: hashedPassword,
     });
 
+    // Save user to database.
     await newUser.save();
 
     return Response.json(

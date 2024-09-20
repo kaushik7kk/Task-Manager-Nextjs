@@ -20,16 +20,18 @@ import Link from "next/link";
 import axios, { AxiosError } from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { signinSchema } from "@/schemas/signinSchema";
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
-
-
   // States.
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Toast.
   const { toast } = useToast();
+
+  // Router.
+  const router = useRouter();
 
   // Setting up validation for the entire form using ZOD and usehooks.
   const form = useForm({
@@ -39,6 +41,16 @@ export default function Signup() {
       password: "",
     },
   });
+
+  // Getting session.
+  const { data: session, status } = useSession();
+
+  // Checking for authorization before rendering page.
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push(`/dashboard/${session.user.username}`);
+    }
+  }, [session, status]);
 
   // Form Submission Handler.
   const onSubmitHandler = async (data: z.infer<typeof signinSchema>) => {

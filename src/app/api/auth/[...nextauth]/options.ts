@@ -7,6 +7,7 @@ import bcryptjs from "bcryptjs";
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
+    // Auth using Credentials.
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
@@ -16,9 +17,12 @@ export const authOptions: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials: any): Promise<any> {
+
+        // Connect to database.
         await dbConnect();
 
         try {
+          // Find user by username or email in database.
           const user = await UserModel.findOne({
             $or: [
               { email: credentials.identifier },
@@ -26,10 +30,12 @@ export const authOptions: NextAuthOptions = {
             ],
           });
 
+          // User not found.
           if (!user) {
             throw new Error("No user found with this email or username.");
           }
 
+          // Compare password.
           const correctPassword = await bcryptjs.compare(
             credentials.password,
             user.password
@@ -47,6 +53,8 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+
+    // Use token to access data.
     async jwt({ token, user }) {
       if (user) {
         token._id = user._id?.toString();
@@ -59,6 +67,8 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
+
+    // Transfer data from token to session.
     async session({ session, token }) {
       if (token) {
         session.user._id = token._id?.toString();

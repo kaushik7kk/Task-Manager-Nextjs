@@ -23,6 +23,7 @@ import { useDebounceCallback } from "usehooks-ts";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { signIn } from "next-auth/react";
 
 export default function Signup() {
   // States.
@@ -30,6 +31,9 @@ export default function Signup() {
   const [uniqueUsernameMsg, setUniqueUsernameMsg] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Router for navigation.
+  const router = useRouter();
 
   // Toast.
   const { toast } = useToast();
@@ -94,6 +98,11 @@ export default function Signup() {
       });
     } finally {
       setIsSubmitting(false);
+      await signIn("credentials", {
+        redirect: false,
+        identifier: data.username,
+        password: data.password,
+      });
     }
   };
 
