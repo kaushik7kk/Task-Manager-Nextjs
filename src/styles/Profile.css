@@ -1,5 +1,65 @@
 .profile-container {
-    border: 1px solid black;
-    width: 70vw;
-    height: 80vh;
+  width: 90vw;
+  height: 85vh;
+}
+
+.profile-img {
+  height: 70vh;
+}
+
+.profile-img img {
+  width: 15vw;
+  height: 32vh;
+  border-radius: 10px;
+  border: 1px solid rgb(130, 124, 124);
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.details {
+  /* border: 1px solid black; */
+  width: 65vw;
+  height: 85vh;
+}
+
+.name-field,
+.username-field,
+.email-field {
+  height: 13vh;
+  width: 44vw;
+  /* border: 1px solid black; */
+}
+
+.name-field label,
+.username-field label,
+.email-field label {
+  font-size: 1.5rem;
+}
+
+.details input {
+  width: 30vw;
+  height: 7vh;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  background-color: rgb(219, 219, 216);
+}
+
+.details label {
+  font-weight: 600;
+}
+
+/* .email-field input {
+    width: 20vw;
+} */
+
+.buttons {
+  /* border: 1px solid black; */
+  width: 45vw;
+  height: 20vh;
+  /* font-size: 1.3rem; */
+}
+
+.pen {
+  font-size: 1.2rem;
 }

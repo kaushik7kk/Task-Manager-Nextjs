@@ -1,7 +1,16 @@
+.container-dd {
+  background-color: #faf7ee;
+}
+
+.sep {
+    color: black;
+    background-color: rgb(253, 220, 180);
+}
+
 .defpoint {
-    cursor: default;
+  cursor: default;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }

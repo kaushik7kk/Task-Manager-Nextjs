@@ -39,7 +39,7 @@ export default function Landing() {
           Manager, managing your organization's tasks has never been easier.
         </div>
         <button className="mx-auto p-5 mt-7">
-          <Link href="/login">Get started</Link>
+          <Link href="/signup">Get started</Link>
         </button>
       </div>
     </>

@@ -10,6 +10,7 @@ declare module "next-auth" {
     lname?: string;
     username?: string;
     email?: string;
+    imgUrl?: string;
     tasks?: Task[];
   }
   interface Session {
@@ -20,6 +21,7 @@ declare module "next-auth" {
         lname?: string;
         username?: string;
         email?: string;
+        imgUrl?: string;
         tasks?: Task[];
     } & DefaultSession["user"];
   }
@@ -33,6 +35,7 @@ declare module "next-auth/jwt" {
     lname?: string;
     username?: string;
     email?: string;
+    imgUrl?: string;
     tasks?: Task[];
   }
 }

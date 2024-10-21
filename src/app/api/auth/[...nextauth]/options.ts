@@ -17,7 +17,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials: any): Promise<any> {
-
         // Connect to database.
         await dbConnect();
 
@@ -53,7 +52,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-
     // Use token to access data.
     async jwt({ token, user }) {
       if (user) {
@@ -63,6 +61,7 @@ export const authOptions: NextAuthOptions = {
         token.lname = user.lname;
         token.username = user.username;
         token.email = user.email;
+        token.imgUrl = user.imgUrl;
         token.tasks = user.tasks;
       }
       return token;
@@ -77,6 +76,7 @@ export const authOptions: NextAuthOptions = {
         session.user.lname = token.lname;
         session.user.username = token.username;
         session.user.email = token.email;
+        session.user.imgUrl = token.imgUrl;
         session.user.tasks = token.tasks;
       }
       return session;

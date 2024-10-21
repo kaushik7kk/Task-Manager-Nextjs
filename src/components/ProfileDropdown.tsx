@@ -32,9 +32,9 @@ export function ProfileDropdown() {
       <DropdownMenuTrigger asChild>
         <FontAwesomeIcon icon={faUser} cursor="pointer" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-cyan-700 text-white">
+      <DropdownMenuContent className="w-56 container-dd text-black">
         <DropdownMenuLabel className="defpoint">Menu</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="sep" />
         <DropdownMenuGroup>
           <Link href={`/profile/${username}`}>
             <DropdownMenuItem className="pointer">Profile</DropdownMenuItem>
@@ -54,7 +54,7 @@ export function ProfileDropdown() {
             <DropdownMenuItem className="pointer">My Friends</DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="sep" />
         <DropdownMenuGroup>
           <DropdownMenuItem className="pointer" onClick={logoutClickHandler}>
             Logout

@@ -23,7 +23,7 @@ import { useDebounceCallback } from "usehooks-ts";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Signup() {
   // States.
@@ -37,6 +37,16 @@ export default function Signup() {
 
   // Toast.
   const { toast } = useToast();
+
+  // Getting session.
+  const { data: session, status } = useSession();
+
+  // Checking for authorization before rendering page.
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push(`/dashboard/${session.user.username}`);
+    }
+  }, [session, status]);
 
   // Debounced value for username callback.
   const debounced = useDebounceCallback(setUsername, 300);
@@ -266,7 +276,7 @@ export default function Signup() {
           </Button>
           <div className="sign-link w-44 mt-2 mx-auto">
             Already a user?&nbsp;
-            <Link href="/login" className="text-white">
+            <Link href="/login" className="text-teal-700">
               Sign in
             </Link>
           </div>

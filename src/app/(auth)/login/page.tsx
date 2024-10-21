@@ -147,7 +147,7 @@ export default function Signup() {
           </Button>
           <div className="sign-link w-52 mt-2 mx-auto">
             Not registered yet?&nbsp;
-            <Link href="/signup" className="text-white">
+            <Link href="/signup" className="text-teal-700">
               Sign Up
             </Link>
           </div>
