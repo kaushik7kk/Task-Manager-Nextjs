@@ -20,5 +20,7 @@ export async function PUT(request: Request) {
                 imgUrl
             }
         )
+    } catch(e) {
+        
     }
 }
