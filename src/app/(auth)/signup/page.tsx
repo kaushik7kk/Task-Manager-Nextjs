@@ -46,7 +46,7 @@ export default function Signup() {
     if (status === "authenticated") {
       router.push(`/dashboard/${session.user.username}`);
     }
-  }, [session, status]);
+  }, [session, status, router]);
 
   // Debounced value for username callback.
   const debounced = useDebounceCallback(setUsername, 300);

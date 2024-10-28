@@ -50,7 +50,7 @@ export default function Signup() {
     if (status === "authenticated") {
       router.push(`/dashboard/${session.user.username}`);
     }
-  }, [session, status]);
+  }, [session, status, router]);
 
   // Form Submission Handler.
   const onSubmitHandler = async (data: z.infer<typeof signinSchema>) => {

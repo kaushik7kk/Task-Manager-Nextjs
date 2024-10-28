@@ -10,17 +10,21 @@ import { UserData } from "@/models/User";
 import { ProfileDialog } from "@/components/ProfileDialog";
 
 export default function Profile({ params }: any) {
+  
+  // Username retrieved from url.
   const username = params.username;
 
+  // Session.
   const { data: session, status } = useSession();
+
+  // User data for controlled inputs.
   const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
     if (status === "authenticated" && session) {
       setUserData(session.user as UserData);
     }
-    console.log(userData);
-  }, [session, status]);
+  }, [session, status, userData]);
 
   return (
     <>
