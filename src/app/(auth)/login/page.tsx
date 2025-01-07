@@ -17,7 +17,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import axios, { AxiosError } from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { signinSchema } from "@/schemas/signinSchema";
 import { getSession, signIn, useSession } from "next-auth/react";
@@ -92,7 +91,7 @@ export default function Signup() {
           className="w-72 mt-44 mx-auto flex flex-col align-center"
         >
           {/* Heading for the signup form. */}
-          <div className="form-heading mx-auto mb-2">SIGN IN</div>
+          <div className="form-heading mx-auto mb-2">LOGIN</div>
           <FormField
             control={form.control}
             name="identifier"

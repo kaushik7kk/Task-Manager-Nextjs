@@ -6,11 +6,13 @@
     font-style: normal;
     font-weight: 600;
     font-size: 1.5rem;
-    text-decoration: underline;
+    cursor: default;
+    /* text-decoration: underline; */
 }
 
 .inputs {
     height: 5vh;
+    border: 1px solid #8ea2ac;
 }
 
 .inp-label {
@@ -26,4 +28,9 @@
 
 .sign-link {
     color: rgb(49, 50, 52);
+    cursor: default;
+}
+
+.sign-link a {
+    color: #00416A;
 }

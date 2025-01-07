@@ -127,7 +127,7 @@ export default function Signup() {
           className="w-72 mt-8 mx-auto flex flex-col align-center"
         >
           {/* Heading for the signup form. */}
-          <div className="form-heading mx-auto mb-2">SIGN UP</div>
+          <div className="form-heading mx-auto mb-2">SIGNUP</div>
           <FormField
             control={form.control}
             name="fname"

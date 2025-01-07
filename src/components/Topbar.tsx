@@ -3,7 +3,7 @@ import React from "react";
 import "@/styles/Topbar.css";
 import { useSession } from "next-auth/react";
 import { ProfileDropdown } from "./ProfileDropdown";
-import { ClipboardCheck } from "lucide-react";
+import { BookmarkCheck } from "lucide-react";
 
 export default function Topbar() {
   // Getting session.
@@ -11,17 +11,17 @@ export default function Topbar() {
 
   return (
     <>
-      <div className="top-container h-12 bg-cyan-100 text-center text-black py-2 flex justify-between px-8">
+      <div className="top-container h-12 text-center py-8 flex justify-between px-8 mx-auto items-center">
         {/* Link with dynamic URLs for brand title. */}
         <div className="brand flex justify-between w-40 items-center">
-          <ClipboardCheck />
+          <BookmarkCheck />
           <Link
             href={
               status === "authenticated"
                 ? `/dashboard/${session?.user.username}`
                 : "/landing"
             }
-            className="barlow-extrabold hover:text-teal-900"
+            className="work-sans"
           >
             Task Manager
           </Link>
@@ -29,7 +29,7 @@ export default function Topbar() {
         {/* Dashboard button and dropdown menu if user logged in. */}
         {status === "authenticated" ? (
           <>
-            <div className="top-links right-links barlow-extrabold hover:text-teal-900">
+            <div className="top-links right-links work-sans xs:hidden">
               <Link
                 href={`/dashboard/${session.user.username}`}
                 className="mx-5"
@@ -42,17 +42,11 @@ export default function Topbar() {
         ) : (
           <>
             {/* User logged out case. */}
-            <div className="top-links right-links flex w-36 justify-between">
-              <Link
-                href="/login"
-                className="hover:text-teal-900 barlow-extrabold"
-              >
+            <div className="top-links right-links flex w-40 justify-between">
+              <Link href="/login" className="work-sans">
                 Login
               </Link>
-              <Link
-                href="/signup"
-                className="hover:text-teal-900 barlow-extrabold"
-              >
+              <Link href="/signup" className="work-sans">
                 Signup
               </Link>
             </div>

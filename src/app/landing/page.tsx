@@ -6,6 +6,7 @@ import "@/styles/Landing.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Landing() {
 
@@ -38,9 +39,9 @@ export default function Landing() {
           on the same page and that nothing falls through the cracks. With Task
           Manager, managing your organization&apos;s tasks has never been easier.
         </div>
-        <button className="mx-auto p-5 mt-7">
+        <Button variant="outline" className="mx-auto p-7 mt-7">
           <Link href="/signup">Get started</Link>
-        </button>
+        </Button>
       </div>
     </>
   );

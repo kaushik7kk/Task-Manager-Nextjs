@@ -3,14 +3,10 @@
 import Topbar from "@/components/Topbar";
 import React, { useEffect, useState } from "react";
 import "@/styles/Profile.css";
-import { Image, Lock, Pen } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { UserData } from "@/models/User";
-import { ProfileDialog } from "@/components/ProfileDialog";
 
 export default function Profile({ params }: any) {
-  
   // Username retrieved from url.
   const username = params.username;
 
@@ -29,52 +25,33 @@ export default function Profile({ params }: any) {
   return (
     <>
       <Topbar />
-      <div className="profile-container mx-auto mt-5 text-center p-5 flex justify-around">
-        <div className="profile-img mt-10 flex flex-col justify-start">
-          <img
-            src={userData?.imgUrl}
-            alt="profile"
-            width="100%"
-            height="100%"
-          />
-          <Button className="mt-4">
-            <Image className="mr-2 h-4 w-4" /> Update profile picture
-          </Button>
-
-          <Button className="mt-2">
-            <Lock className="mr-2 h-4 w-4" /> Change password
-          </Button>
-        </div>
-        <div className="details flex flex-col justify-start items-center p-3">
-          <div className="name-field flex justify-between items-center">
-            <label htmlFor="">First Name</label>
-            <input type="text" value={userData?.fname} disabled />
+      <div className="profile-container mx-auto flex mt-5">
+        <div className="profile-left my-auto">
+          <div className="profile-picture-container mx-auto mt-5">
+            <img src={session?.user.imgUrl} alt="" />
           </div>
-          <div className="name-field flex justify-between items-center">
-            <label htmlFor="">Middle Name</label>
-            <input type="text" value={userData?.mname} disabled />
-          </div>
-          <div className="name-field flex justify-between items-center">
-            <label htmlFor="">Last Name</label>
-            <input type="text" value={userData?.lname} disabled />
-          </div>
-
-          <div className="username-field flex justify-between items-center">
-            <label htmlFor="">Username</label>
-            <input type="text" value={userData?.username} disabled />
-          </div>
-          <div className="email-field flex justify-between items-center">
-            <label htmlFor="">Email</label>
-            <input type="email" value={userData?.email} disabled />
-          </div>
-
-          <div className="buttons p-4 flex justify-around items-center">
-            {/* <Button className="pen px-8">
-              <Pen className="mr-4 h-4 w-4" /> Edit
-            </Button> */}
-            <ProfileDialog />
+          <div className="left-button-list mx-auto mt-2 flex flex-col items-center">
+            {/* <ProfilePictureDialog /> */}
           </div>
         </div>
+        <div className="profile-right my-auto">
+          <div className="right-header flex justify-between p-5">
+            <div className="details-title">Profile details</div>
+            <div className="edit-profile-button">Edit profile</div>
+          </div>
+          <div className="right-content mx-auto flex flex-col">
+            <div className="content-r1 p-5">
+              <div className="profile-input-group flex">
+                <label htmlFor="">First Name&nbsp;&nbsp;</label>
+                <input type="text" className="w-40" />
+              </div>
+            </div>
+            <div className="content-r2"></div>
+          </div>
+        </div>
+      </div>
+      <div className="profile-analysis-container mx-auto mt-5 flex items-center justify-center">
+        PROFILE ANALYSIS COMING SOON
       </div>
     </>
   );
