@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { signinSchema } from "@/schemas/signinSchema";
@@ -50,6 +50,16 @@ export default function Signup() {
       router.push(`/dashboard/${session.user.username}`);
     }
   }, [session, status, router]);
+
+  // Loading to prevent rendering unauthenticated content.
+
+  if (status === "loading") {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center">
+        <Loader className="h-16 w-16 animate-spin" />
+      </div>
+    );
+  }
 
   // Form Submission Handler.
   const onSubmitHandler = async (data: z.infer<typeof signinSchema>) => {
