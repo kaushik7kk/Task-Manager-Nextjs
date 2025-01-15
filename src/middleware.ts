@@ -12,14 +12,14 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // If accessing a protected route that contains 'dashboard'
-  if (protectedRoutes.some(route => pathname.includes(route))) {
-    if (!token) {
-      // Redirect unauthenticated users to login
-      url.pathname = "/login";
-      url.searchParams.set("callbackUrl", pathname); // Preserve original path
-      return NextResponse.redirect(url);
-    }
-  }
+  // if (protectedRoutes.some(route => pathname.includes(route))) {
+  //   if (!token) {
+  //     // Redirect unauthenticated users to login
+  //     url.pathname = "/login";
+  //     url.searchParams.set("callbackUrl", pathname); // Preserve original path
+  //     return NextResponse.redirect(url);
+  //   }
+  // }
 
   // If accessing an auth-restricted route
   if (authRestrictedRoutes.includes(pathname)) {
