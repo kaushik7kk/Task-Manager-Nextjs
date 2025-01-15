@@ -1,14 +1,15 @@
 "use client";
 
 import Topbar from "@/components/Topbar";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import "@/styles/Profile.css";
 import { useSession } from "next-auth/react";
 import { UserData } from "@/models/User";
 
 export default function Profile({ params }: any) {
   // Username retrieved from url.
-  const username = params.username;
+  const para: { username: string } = use(params);
+  const username = para.username;
 
   // Session.
   const { data: session, status } = useSession();
